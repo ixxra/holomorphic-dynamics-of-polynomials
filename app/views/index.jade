@@ -1,4 +1,5 @@
 extends layout
+include paletteCanvas.jade
 
 block content
   section
@@ -8,3 +9,7 @@ block content
     canvas#mbCanvas.zoomCanvas(width="256", height="256")
       p.redText Your browser does not support the canvas tag.
     
+    +paletteCanvas
+
+block postJs
+  script(type="text/javascript", src="/javascripts/bundle.js")

@@ -1,30 +1,17 @@
-
-/********************************************************************************/
-//the mandelbrot color and the palette for points not belonging to the mandelbrot set
-/********************************************************************************/
-var mandelColor = new MandelCol(0,0,0); //start with black
+var color = require('./color');
+var config = require('./config');
+var $ = require('jquery');
 
 
-/********************************************************************************/
-//the mandelbrot set
-/********************************************************************************/
-var maxIt = 1000; //maximum number of iterations
-var selectedCol = 'logarithmic'; //default colouring
-var cx = -0.6;	//default point for generating julia set
-var cy = 0.6;
+$(document).ready(function (){
+  var mandelColor = new color.MandelCol(0,0,0);
+  var pal = new color.Palette('#000', '#ff0000' , '#000');
 
+  pal.paint(document.getElementById(config.paletteCanvas));
 
-init();
+  var maxIt = 1000; //maximum number of iterations
+  var selectedCol = 'logarithmic'; //default colouring
+  var cx = -0.6;	//default point for generating julia set
+  var cy = 0.6;
 
-mbFractal.generateFractal();
-juliaFractal.generateFractal();
-mbFractal.paintFractal();
-juliaFractal.paintFractal();
-
-
-/********************************************************************************/
-//zoom in and pick julia point
-/********************************************************************************/
-var fX, fY, lX=-1, lY; //lX used as flag for rectangle being drawn or not
-var drawFilledSquare=false;
-var xMin, xMax, yMin, yMax;
+});
