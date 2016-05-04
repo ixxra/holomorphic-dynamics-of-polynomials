@@ -6,6 +6,11 @@ gulp.task('makeMarkup', function(){
   pugit('app/views/index.jade', {pretty:true}).pipe(gulp.dest('public'));
 });
 
+gulp.task('copyAssets', function(){
+  gulp.src('app/lib/*.js').pipe(gulp.dest('public/javascripts'));
+  gulp.src('app/css/*.css').pipe(gulp.dest('public/stylesheets'));
+});
+
 gulp.task('cook', function(){
   gulp.src('app/src/index.js')
     .pipe(rename('fractalview.js'))
@@ -29,4 +34,4 @@ gulp.task('browserify', function () {
 });
 
 
-gulp.task('default', ['makeMarkup', 'cook']);
+gulp.task('default', ['makeMarkup', 'cook', 'copyAssets']);
