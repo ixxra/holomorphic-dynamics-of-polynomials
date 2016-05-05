@@ -18,6 +18,7 @@ function makeComponent(config, fractalGen, palette, mandelColor){
   return new fractalComponent(canvas, resetButton, frac, palette, mandelColor);
 }
 
+
 $(document).ready(function (){
   var mandelColor = new color.MandelCol(0,0,0);
   var pal = new color.Palette('#000', '#ff0000' , '#000');

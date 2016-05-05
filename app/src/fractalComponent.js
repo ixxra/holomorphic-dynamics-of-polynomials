@@ -1,5 +1,5 @@
 var config = require('./config');
-var coord = require('./coord');
+var Coord = require('./coord');
 
 
 
@@ -8,7 +8,7 @@ class Component {
     this.resetButton = resetButton;
     this.zoomCanvas = canvas;
     this.fractal = fractal;
-    this.resetButton.click(this.reset);
+    this.resetButton.addEventListener('click', this.reset.bind(this));
     this.palette = palette;
     this.mandelColor = mandelColor;
 
@@ -23,22 +23,22 @@ class Component {
     this.yMax = 0;
 
 
-    this.zoomCanvas.addEventListener('mousedown', function(e){
+    this.zoomCanvas.addEventListener('mousedown', (function(e){
       this.drawFilledSquare=true;
-      this.fX=e.pageX-this.offsetLeft;
-      this.fY=e.pageY-this.offsetTop;
-    });
+      this.fX=e.pageX-e.currentTarget.offsetLeft;
+      this.fY=e.pageY-e.currentTarget.offsetTop;
+    }).bind(this));
 
     this.zoomCanvas.addEventListener('mousemove', (function(e){
       if (this.lX!=-1 && this.drawFilledSquare) {
         this.invertFilledSquare(this.fX, this.fY, this.lX, this.lY,
-          this.width, this.getContext("2d")); //erase last drawn rectangle
+          e.currentTarget.width, e.currentTarget.getContext("2d")); //erase last drawn rectangle
       }
-      this.lX = e.pageX - this.offsetLeft;
-      this.lY = e.pageY - this.offsetTop;
+      this.lX = e.pageX - e.currentTarget.offsetLeft;
+      this.lY = e.pageY - e.currentTarget.offsetTop;
       if (this.drawFilledSquare) {
-        invertFilledSquare(this.fX, this.fY, this.lX, this.lY,
-          this.width, this.getContext("2d"));
+        this.invertFilledSquare(this.fX, this.fY, this.lX, this.lY,
+          e.currentTarget.width, e.currentTarget.getContext("2d"));
       }
     }).bind(this));
 
@@ -70,11 +70,11 @@ class Component {
     if ((this.lX==this.fX || this.lY==this.fY)) {  // it was a click, not a drag, generate julia
       //do nothing
     } else {									//zoom in
-      this.fractal.coord = new coord.Coord(this.fractal.size, this.fractal.size,
+      this.fractal.coord = new Coord(this.fractal.size, this.fractal.size,
         this.fractal.coord.getDblX(this.xMin), this.fractal.coord.getDblX(this.xMax),
         this.fractal.coord.getDblY(this.yMax), this.fractal.coord.getDblY(this.yMin));
       this.fractal.generateFractal();
-      this.fractal.paintFractal();
+      this.fractal.paintFractal(this.palette, this.mandelColor);
     }
     this.lX==-1;
   }
@@ -97,7 +97,7 @@ class Component {
       this.yMax=y1+side;
     } else {
       this.yMax=y1;
-      this.yMin=yMax-side;
+      this.yMin=this.yMax-side;
     }
     for(var y=this.yMin; y<this.yMax; y+=1){
       for(var x=size*(y-1)*4+this.xMin*4; x<size*(y-1)*4+this.xMax*4; x+=4){
