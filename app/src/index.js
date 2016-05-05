@@ -26,6 +26,15 @@ $(document).ready(function (){
   var paletteComponent = new PaletteComponent(pal, palette.getElementsByTagName('canvas')[0]);
   paletteComponent.paint();
 
-  makeComponent(config.components.mandelbrot, fractal.mb, pal, mandelColor);
-  makeComponent(config.components.julia, fractal.julia, pal, mandelColor);
+  var mandel = makeComponent(config.components.mandelbrot, fractal.mb, pal, mandelColor);
+  var julia = makeComponent(config.components.julia, fractal.julia, pal, mandelColor);
+
+  mandel.zoomCanvas.addEventListener('mouseup', (function (evt) {
+    if ((this.lX==this.fX || this.lY==this.fY)) {  // it was a click, not a drag, generate julia
+      config.julia.cx = this.fractal.coord.getDblX(this.lX);
+      config.julia.cy = this.fractal.coord.getDblY(this.lY);
+      $('#juliaPoint').text('('+config.julia.cx+' , '+config.julia.cy+')');
+      julia.repaint();
+    }
+  }).bind(mandel));
 });

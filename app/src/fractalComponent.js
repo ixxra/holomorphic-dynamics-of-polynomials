@@ -64,6 +64,12 @@ class Component {
     fractal.paintFractal(this.palette, this.mandelColor);
   }
 
+  repaint() {
+    let fractal = this.fractal;
+    fractal.generateFractal();
+    fractal.paintFractal(this.palette, this.mandelColor);
+  }
+
   finishMouseMove (){
     if (!this.drawFilledSquare) return false;
     this.drawFilledSquare=false;
