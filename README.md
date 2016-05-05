@@ -4,7 +4,7 @@
 This is a remake of code made by Malin Christersson, [http://www.malinc.se/testinghtml5/juliaUsingHtml5.html](http://www.malinc.se/testinghtml5/juliaUsingHtml5.html).
 
 I rewrote the code in his webpage in a more modular fashion,
-using [browserify]() and [jade]()/[pug]().
+using [browserify](http://browserify.org/) and [jade](http://jade-lang.com/)/[pug]().
 
 The source code is located in `app` folder, under `src` and `views`.
 
