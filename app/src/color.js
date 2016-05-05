@@ -1,23 +1,6 @@
 "use strict";
-/*
-function linearColoring(m){
-  var n = Math.floor((palSize-1)*m/maxIt);
-        return colors[n];
-}
+var config = require('./config');
 
-function logColoring(m){
-  var d1=Math.log(m+1);
-        var d2=Math.log(maxIt+1);
-        var n=Math.floor((palSize-1)*d1/d2);
-        return colors[n];
-}
-
-function sinColoring(m){
-  var d1=(Math.sin(m)+1)/2;
-        var n=Math.floor(palSize*d1);
-        return colors[n];
-}
-*/
 
 function MandelCol(red, green, blue) {
   this.red = red;
@@ -25,14 +8,6 @@ function MandelCol(red, green, blue) {
   this.blue = blue;
 }
 
-//var palSize = 512;
-//var colors = new Array(palSize);
-//for (var i=0; i<palSize; i+=1) {
-//  colors[i] = new Array(3);
-//}
-//var currentColor = new Object();
-//var pal = new Palette('#000', '#ff0000' , '#000')
-//paintPalette();
 
 
 class Palette {
@@ -70,13 +45,13 @@ class Palette {
 
   linearColoring(m){
     var n = Math.floor((this.palSize-1)*m/this.maxIt);
-          return this.colors[n];
+    return this.colors[n];
   }
 
   logColoring(m){
-    var d1=Math.log(m+1);
-    var d2=Math.log(this.maxIt+1);
-    var n=Math.floor((this.palSize-1)*d1/d2);
+    var d1 = Math.log(m+1);
+    var d2 = Math.log(config.maxIt+1);
+    var n = Math.floor((this.palSize-1) * d1 / d2);
     return this.colors[n];
   }
 

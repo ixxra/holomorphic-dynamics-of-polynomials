@@ -1,0 +1,20 @@
+mixin mbCanvas
+  div#mb
+    button.reset reset Mandelbrot
+    canvas#mbCanvas.zoomCanvas(width="256", height="256")
+      p.redText Your browser does not support the canvas tag
+    
+mixin juliaCanvas
+  div#julia
+    button.reset reset Julia
+    canvas#juliaCanvas.zoomCanvas(width="256", height="256")
+      p.redText Your browser does not support the canvas tag
+
+
+mixin paletteCanvas
+  div#palette
+    button#leftButton(style="left:-150px;") set left colour
+    button#midButton set middle color
+    button#rightButton(style="left:150px;") set right colour
+    canvas#palCanvas(width="512", height="20")
+      p.redText Your browser does not support the canvas tag.

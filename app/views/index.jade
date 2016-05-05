@@ -1,14 +1,11 @@
 extends layout
 include paletteCanvas.jade
+include mixins/canvas.jade
 
 block content
-  section
-    h1 Julia set
-    
-    button#resetMb Reset Mandelbrot set
-    canvas#mbCanvas.zoomCanvas(width="256", height="256")
-      p.redText Your browser does not support the canvas tag.
-    
+  section    
+    +mbCanvas
+    +juliaCanvas
     +paletteCanvas
 
 block postJs

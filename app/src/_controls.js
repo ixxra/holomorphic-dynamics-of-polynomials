@@ -1,10 +1,12 @@
-module.exports = function loader(){
+var config = require('./config');
+
+module.exports = function loader(mbFractal, juliaFractal){
 
   /********************************************************************************/
   //the controls for the fractals
   /********************************************************************************/
   $('input[name=colouring]:radio').click(function(){
-    selectedCol = this.value;
+    config.selectedCol = this.value;
     mbFractal.paintFractal();
     juliaFractal.paintFractal();
   });

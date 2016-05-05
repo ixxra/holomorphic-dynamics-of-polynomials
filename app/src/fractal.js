@@ -1,3 +1,7 @@
+var config = require('./config');
+var color = require('./color');
+
+
 function Fractal(size, coord, ctx, func) {
   this.size = size;
   this.coord = coord;
@@ -25,40 +29,41 @@ Fractal.prototype = {
       }
     }
   },
-  paintFractal : function() {
+  paintFractal : function(palette, mandelColor) {
     var imgd = this.ctx.getImageData(0,0,this.size,this.size);
     var pix = imgd.data;
-    if (selectedCol=='argument'){
+
+    if (config.selectedCol=='argument'){
       for (var i=0; i<this.size; i++) {
         for (var j=0; j<this.size; j++) {
           var iOffset = 4 * (j * this.size + i);
-          pix[iOffset] = linearColoring(this.argmatrix[i][j])[0];
-          pix[iOffset+1] = linearColoring(this.argmatrix[i][j])[1];
-          pix[iOffset+2] = linearColoring(this.argmatrix[i][j])[2];
+          pix[iOffset] = palette.linearColoring(this.argmatrix[i][j])[0];
+          pix[iOffset+1] = palette.linearColoring(this.argmatrix[i][j])[1];
+          pix[iOffset+2] = palette.linearColoring(this.argmatrix[i][j])[2];
           pix[iOffset+3] = 255;
         }
       }
     } else {
       var func;
-      if (selectedCol=='linear'){
-        func = linearColoring;
-      } else if (selectedCol=='logarithmic'){
-        func = logColoring;
+      if (config.selectedCol=='linear'){
+        func = palette.linearColoring;
+      } else if (config.selectedCol=='logarithmic'){
+        func = palette.logColoring;
       } else {
-        func = sinColoring;
+        func = palette.sinColoring;
       }
       for (var i=0; i<this.size; i++) {
         for (var j=0; j<this.size; j++) {
           var iOffset = 4 * (j * this.size + i);
-          if (this.matrix[i][j]==maxIt){
+          if (this.matrix[i][j]==config.maxIt){
             pix[iOffset] = mandelColor.red;
             pix[iOffset+1] = mandelColor.green;
             pix[iOffset+2] = mandelColor.blue;
             pix[iOffset+3] = 255;
           } else {
-            pix[iOffset] = func(this.matrix[i][j])[0];
-            pix[iOffset+1] = func(this.matrix[i][j])[1];
-            pix[iOffset+2] = func(this.matrix[i][j])[2];
+            pix[iOffset] = func.call(palette, this.matrix[i][j])[0];
+            pix[iOffset+1] = func.call(palette, this.matrix[i][j])[1];
+            pix[iOffset+2] = func.call(palette, this.matrix[i][j])[2];
             pix[iOffset+3] = 255;
           }
         }
@@ -73,6 +78,7 @@ Fractal.prototype = {
 function getArgument(x,y){
   var arg;
   var theta=Math.atan2(y, x);
+      var maxIt = config.maxIt;
       var w = (theta+Math.PI)/(2*Math.PI)*maxIt;
       if (w<0) {
         arg = 0;
@@ -82,13 +88,13 @@ function getArgument(x,y){
         arg = Math.floor(w);
       }
   return arg;
-
 }
 
 function mb(x, y){
   var oldX = 0, oldY = 0;
   var newX = 0, newY = 0;
   var i = 0;
+  var maxIt = config.maxIt;
   while (i<maxIt && (newX * newX + newY * newY) < 4){
     newX = oldX * oldX - oldY * oldY + x;
     newY = 2 * oldX * oldY + y;
@@ -106,6 +112,9 @@ function julia(x, y){
   var oldX = x, oldY = y;
   var newX = 0, newY = 0;
   var i = 0;
+  var maxIt = config.maxIt;
+  var cx = config.julia.cx;
+  var cy = config.julia.cy;
   while (i<maxIt && (newX * newX + newY * newY) < 4){
     newX = oldX * oldX - oldY * oldY + cx;
     newY = 2 * oldX * oldY + cy;

@@ -3,10 +3,6 @@ this is not ready yet
 */
 
 
-/********************************************************************************/
-//the mandelbrot color and the palette for points not belonging to the mandelbrot set
-/********************************************************************************/
-var mandelColor = new MandelCol(0,0,0); //start with black
 
 
 /********************************************************************************/
