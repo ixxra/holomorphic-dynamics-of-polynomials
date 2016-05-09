@@ -56,10 +56,10 @@ class Component {
 
   reset () {
     let fractal = this.fractal;
-    fractal.coord.dblXmin = -2.0;
-    fractal.coord.dblXmax = 2.0;
-    fractal.coord.dblYmin = -2.0;
-    fractal.coord.dblYmax = 2.0;
+    fractal.coord.dblXmin = -4.0;
+    fractal.coord.dblXmax = 4.0;
+    fractal.coord.dblYmin = -4.0;
+    fractal.coord.dblYmax = 4.0;
     fractal.generateFractal();
     fractal.paintFractal(this.palette, this.mandelColor);
   }

@@ -17,7 +17,7 @@ class Palette {
     this.right = right;
 
     this.palSize = 512;
-    this.maxIt = 1000;
+    //this.maxIt = 1000;
 
     this.colors = new Array(this.palSize);
     for (var i=0; i<this.palSize; i+=1) {
@@ -44,7 +44,7 @@ class Palette {
   }
 
   linearColoring(m){
-    var n = Math.floor((this.palSize-1)*m/this.maxIt);
+    var n = Math.floor((this.palSize-1)*m/config.maxIt);
     return this.colors[n];
   }
 

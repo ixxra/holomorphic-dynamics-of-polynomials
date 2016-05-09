@@ -5,6 +5,7 @@ module.exports = {
     palette: {id: 'palette'}
   },
   maxIt: 1000,
-  selectedCol: 'logarithmic',
-  julia: {cx: -0.6, cy: 0.6}
+  selectedCol: 'locarithmic',
+  julia: {cx: -0.6, cy: 0.6},
+  julia4: {cx: 0, cy: 1}
 }
